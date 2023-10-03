@@ -1,10 +1,8 @@
 import { Movies } from './components/movies'
 import './App.css'
-import responseMovies from './mock/with-results.json'
-import withoutResults from './mock/no-results.json' 
 import { useMovies } from './hooks/useMovies'
 
-const API_KEY = '4287ad07'
+
 
 function App() {
   const { movies: mappedMovies } = useMovies()
