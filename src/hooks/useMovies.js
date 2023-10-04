@@ -1,6 +1,9 @@
-import responseMovies from '../mock/with-results.json'
+import withoutResults from '../mock/no-results.json'
+import { useState } from 'react'
 
-export function useMovies () {
+
+export function useMovies ({ search }) {
+  const [responseMovies, setResponseMovies ] = useState([])
     //Tenemos peliculas cuando podemos acceder a Search y este contiene un array
     const movies = responseMovies.Search
     //Mapeo la API para no utilizar su contrato y establecer un contrato propio
@@ -14,5 +17,17 @@ export function useMovies () {
   
     }
     ))
-return { movies: mappedMovies }
+
+    const getMovies = () => {
+      if (search) {
+        fetch(`http://omdbapi.com/?apikey=4287ad07&s=${search}`)
+        .then(res => res.json())
+        .then(json => {
+          setResponseMovies(json)
+        })
+      } else {
+        setResponseMovies(withoutResults)
+      }
+    }
+return { movies: mappedMovies, getMovies }
 }
